@@ -1,0 +1,30 @@
+# Data Ingestion & Manipulation
+pandas
+numpy
+yfinance
+ccxt
+twelvedata
+requests
+
+# Technical Indicators
+TA-Lib
+pandas-ta
+
+# ML/AI Engine
+scikit-learn
+xgboost
+lightgbm
+joblib
+#tflite-runtime
+tensorflow
+
+# Backtesting
+backtesting
+
+# Configuration & Utilities
+PyYAML
+python-dotenv
+rich # For beautiful terminal output
+
+# Optional Dashboard
+streamlit

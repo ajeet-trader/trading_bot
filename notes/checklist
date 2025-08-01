@@ -1,0 +1,165 @@
+✅ Project Development Master Checklist
+AI-Powered Trading System | 8GB RAM Optimized | Sequential Build & Test
+
+🚀 Phase 1: Core Infrastructure - DONE
+Goal: Build the foundational, non-trading utilities that the rest of the system will rely on.
+
+📦 Module 1.1: Configuration System   - DONE
+ Implement config_loader.py in the utils directory to parse config.yaml and .env files.
+
+ Add robust error handling for missing files or malformed entries.
+
+ Validation: Write tests to ensure configuration is loaded correctly and accessible from other modules.
+
+🪵 Module 1.2: Logging System  - DONE
+ Implement logger_setup.py using Python's logging module.
+
+ Configure structured (JSON) logging to separate files (signals.log, trades.log, errors.log).
+
+ Implement log rotation to manage file sizes (e.g., rotate after 20MB).
+
+ Validation: Write tests to confirm that logs are written to the correct files with the correct format from various parts of the application.
+
+🧠 Module 1.3: Core Data Structures  - DONE
+ Define memory-efficient custom classes for Signal, Trade, and Position objects using __slots__.
+
+ Validation: Write unit tests to verify the behavior and memory footprint of these data structures.
+
+📊 Phase 2: Data Ingestion System  - DONE
+Goal: Create a reliable pipeline to fetch, normalize, and store market data from multiple sources.
+
+🔌 Module 2.1: API Adapters   - DONE
+ Implement a base APIAdapter class.
+
+ Create a YahooFinanceAdapter for fetching historical stock data.
+
+ Create a CCXTAdapter for fetching historical and real-time crypto data (e.g., from Binance).
+
+ Validation: Test each adapter to ensure it can connect, fetch, and return data in a standardized format.
+
+⚙️ Module 2.2: Data Normalization & Quality   - DONE
+ Implement a data normalization layer to ensure consistent column names (e.g., timestamp, open, high, low, close, volume).
+
+ Add data quality checks to handle missing values (NaNs) and outliers.
+
+ Validation: Test the normalization and quality checks with data from different sources.
+
+💾 Module 2.3: Data Storage     - DONE
+ Implement logic to save and retrieve data using the memory-efficient Parquet format.
+
+ Create a data versioning system (e.g., naming files with date and version) to ensure reproducibility.
+
+ Validation: Test the storage and retrieval process, ensuring data integrity and efficient read/write speeds.
+
+📈 Phase 3: Strategy & Signal Layer   - DONE
+Goal: Build the framework for defining and generating trading signals from various strategies.
+
+🧱 Module 3.1: Strategy Framework   - DONE
+ Create a base Strategy class that all other strategies will inherit from. It must define a common interface for generating signals.
+
+ Implement signal logging to capture every generated signal with its context (strategy, timestamp, symbol).
+
+ Validation: Test the base class to ensure the interface is enforceable.
+
+📚 Module 3.2: Classic & Quant Strategies  - DONE
+ Implement 3–5 classic strategies (e.g., EMA Crossover, RSI, Bollinger Bands).
+
+ Implement 1–2 quantitative strategies (e.g., Mean Reversion, Momentum).
+
+ Validation: Write unit tests for each strategy's logic to confirm correct signal generation based on sample data.
+
+🧪 Phase 4: Backtesting System  - DONE
+Goal: Develop a robust engine to test strategy performance on historical data.
+
+🔁 Module 4.1: Backtesting Engine  - DONE
+ Integrate backtesting.py into our framework within the /backtest module.
+
+ Implement an event loop to feed historical data to the strategy layer.
+
+ Validation: Run a simple benchmark strategy (e.g., buy and hold) and verify the results are as expected.
+
+📉 Module 4.2: Performance Analytics  - DONE
+ Implement calculation and reporting for key metrics: Sharpe Ratio, Sortino Ratio, Max Drawdown, Win Rate, CAGR.
+
+ Add functionality to generate equity curve plots and trade reports.
+
+ Validation: Verify metric calculations against a known, simple dataset and results.
+
+🧬 Module 4.3: Optimization  - DONE
+ Implement grid search for strategy parameter optimization.
+
+ Implement walk-forward testing to validate strategy robustness and mitigate overfitting.
+
+ Validation: Run an optimization and walk-forward test, analyzing the reports for logical consistency.
+
+🤖 Phase 5: AI & Machine Learning Engine - WIP
+Goal: Integrate predictive models to enhance signal generation.
+
+🧱 Module 5.1: Feature Engineering  - DONE
+ Create a feature generation pipeline (e.g., technical indicators, time-based features, lagged values).
+
+ Validation: Test the feature generation process for correctness and consistency.
+
+🎓 Module 5.2: Model Training & Registry
+ Implement a training pipeline for an initial model (e.g., XGBoost, LightGBM).
+
+ Implement a model registry to save, version, and load trained models.
+
+ Validation: Train a model and test the save/load functionality, ensuring memory constraints are respected.
+
+🧠 Module 5.3: AI-Driven Strategy
+ Create a strategy that uses the trained ML model to generate signals.
+
+ Implement confidence scoring for AI-based signals.
+
+ Validation: Backtest the AI-driven strategy and analyze its performance report.
+
+📟 Phase 6: Execution System
+Goal: Build the components to simulate and (eventually) execute live trades.
+
+🧪 Module 6.1: Paper Trading Engine
+ Implement the paper_trader.py to simulate trade execution based on signals.
+
+ Add models for slippage and commission costs.
+
+ Validation: Run a backtest and have the paper trader execute the signals, comparing the final P&L.
+
+📉 Module 6.2: Risk Management
+ Implement position sizing logic (e.g., fixed fractional).
+
+ Add system-level risk controls (e.g., circuit breakers to halt trading on large drawdowns).
+
+ Validation: Test risk management rules in simulation to ensure they trigger correctly.
+
+🛠️ Module 6.3: Live Integration (Future)
+ Implement a live trading adapter (e.g., for Alpaca or Binance).
+
+ Validation: Perform extensive testing in a sandboxed/paper-money live environment.
+
+📊 Phase 7: Monitoring & Operations
+Goal: Create tools for real-time monitoring and long-term maintenance.
+
+📺 Module 7.1: Dashboard (Optional)
+ Develop a simple Streamlit dashboard to display live positions, P&L, and recent signals.
+
+ Validation: Test the dashboard with simulated live data.
+
+🔁 Module 7.2: Auto-Retraining
+ Design a framework for periodically retraining ML models on new data.
+
+ Validation: Manually trigger and test the retraining cycle.
+
+🚀 Module 7.3: Deployment
+ Create a main.py CLI to run the bot in different modes (backtest, live).
+
+ Write a README.md with setup and usage instructions.
+
+ Validation: Test the CLI and installation process from a clean environment.
+
+📌 Implementation Rules
+✅ Sequential Validation: Each module must pass its validation tests before we begin development on any module that depends on it.
+
+✅ Resource Monitoring: We will continuously monitor RAM and CPU usage during all tests to ensure we stay within our 8GB limit.
+
+✅ Documentation: Each module will be documented with its purpose and API before we consider it complete.
+

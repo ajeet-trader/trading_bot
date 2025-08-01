@@ -1,0 +1,9 @@
+{
+  "model_name": "test_dummy_model",
+  "saved_at": "20250801_151842",
+  "metrics": {
+    "accuracy": 0.98,
+    "feature_set": "dummy_v1"
+  },
+  "model_filepath": "J:\\bot_02\\trading_bot\\ai_models\\saved_models\\test_dummy_model_20250801_151842.joblib"
+}

@@ -1,0 +1,277 @@
+✅ MASTER BLUEPRINT: AI-Powered Modular Trading Bot System
+🧱 PHASE 1: Data Ingestion & Storage
+✅ Goal: Fetch, normalize, and store multi-source price data
+
+🔧 Modules:
+fetch_yfinance()
+
+fetch_binance()
+
+fetch_twelvedata() (optional)
+
+normalize_ohlcv()
+
+store_data() → as CSV/SQLite
+
+📁 Folders:
+data/raw/
+
+data/processed/
+
+✅ Testing:
+Test main.py fetches valid OHLCV for 2 symbols (e.g. BTC/USDT, EURUSD=X)
+
+Check CSVs or SQLite files saved correctly
+
+Validate column structure: timestamp, open, high, low, close, volume
+
+📊 PHASE 2: Strategy Engine (50+ Strategies)
+✅ Goal: Modular, plug-in strategy layer with signal logic
+
+🔧 Core Base:
+BaseStrategy class
+
+run(df) → returns signals (entry/exit)
+
+generate_signals() logic
+
+Strategy parameters from YAML or Python dict
+
+🔢 Strategy Types:
+✅ Classic: EMA Crossover, RSI, MACD, BB, Stoch, Engulfing
+
+🧠 Quant: Mean Reversion, Momentum, Seasonality
+
+🤖 ML: Model-based strategies (later)
+
+⚙️ Configurable: TP, SL, Risk-Reward, Position Sizing
+
+📁 Folder:
+strategies/ema_crossover.py
+
+strategies/rsi_engulfing.py
+
+etc.
+
+✅ Testing:
+Run strategy.run(df) → check returned signals
+
+Confirm signal logs (BUY/SELL) are correctly aligned with candle timestamps
+
+Plot signals on price chart to visually validate
+
+📈 PHASE 3: Backtesting Framework
+✅ Goal: Run multi-symbol, multi-strategy backtests efficiently
+
+🧰 Libraries:
+backtesting, backtrader, or lightweight custom engine
+
+🔧 Modules:
+BacktestRunner class
+
+load_strategy()
+
+run_backtest(symbol, strategy, params)
+
+get_metrics(): Sharpe, Win%, Max DD, CAGR, Expectancy, etc.
+
+walk_forward_test()
+
+parameter_grid_search()
+
+📁 Folder:
+backtest/core.py
+
+backtest/results/
+
+✅ Testing:
+Backtest 2 strategies on 1 symbol for 6 months
+
+Compare metrics across runs
+
+Confirm backtest logs (entry, exit, PnL) saved properly
+
+🤖 PHASE 4: ML Engine
+✅ Goal: Train models to predict future TP/SL outcomes or direction
+
+🔧 Modules:
+feature_generator() → RSI, MACD, Lag features, regime detection
+
+train_model(X, y)
+
+evaluate_model()
+
+save_model(), load_model()
+
+Model registry with versioning
+
+🤖 Models:
+Scikit-learn: RandomForest, XGBoost, LightGBM
+
+TensorFlow Lite (for RAM-efficiency)
+
+Clustering: KMeans/GMM for market regimes
+
+📁 Folder:
+ai_models/
+
+ai_models/features/
+
+ai_models/models/
+
+✅ Testing:
+Train model on 6 months BTC 5min data → predict next candle up/down
+
+Save and reload model
+
+Evaluate accuracy, precision, F1-score
+
+🧠 PHASE 5: Signal Engine
+✅ Goal: Combine Strategy + ML outputs → final signal
+
+🔧 Modules:
+SignalCombiner(strategy_signal, model_prediction)
+
+signal_strength()
+
+confidence_score()
+
+📁 Folder:
+live_signals/engine.py
+
+✅ Testing:
+Ensure signal engine gives BUY/SELL/HOLD with score
+
+Output logs correctly
+
+Compare strategy-only vs ML-enhanced accuracy
+
+🛠️ PHASE 6: Execution Engine
+✅ Goal: Simulate or execute trades (paper/live)
+
+🔧 Modules:
+PaperBroker(): simulate fills, TP/SL
+
+LiveBroker() (Alpaca, Binance, OANDA plugin-ready)
+
+simulate_slippage(), calculate_commissions()
+
+Capital allocation, position sizing
+
+📁 Folder:
+execution/paper.py
+
+execution/live.py
+
+✅ Testing:
+Paper simulate 5 trades from signals
+
+Confirm PnL & trade log accuracy
+
+Test TP/SL hit logic
+
+📓 PHASE 7: Logger & Analytics
+✅ Goal: Log every trade, signal, prediction with timestamp & outcome
+
+🔧 Modules:
+TradeLogger()
+
+SignalLogger()
+
+ErrorLogger()
+
+Store as CSV, JSON, or SQLite
+
+📁 Folder:
+logs/signals/
+
+logs/trades/
+
+logs/errors/
+
+✅ Testing:
+Validate full history logs are written
+
+Confirm trade outcome analysis works
+
+Generate performance summary
+
+📊 PHASE 8: Dashboard (Optional but Recommended)
+✅ Goal: Real-time and historical insights via Streamlit UI
+
+🔧 Features:
+Symbol selector
+
+Signal chart overlay
+
+Strategy/ML comparison
+
+Trade performance stats
+
+Configurator for running strategies live
+
+📁 Folder:
+live_signals/dashboard.py
+
+✅ Testing:
+Run Streamlit app
+
+Load signals & logs
+
+Display charts and metrics
+
+🔁 PHASE 9: Auto-Retraining & Optimization
+✅ Goal: Periodic model retraining & strategy tuning
+
+🔧 Tools:
+Cron jobs or CLI scheduler
+
+retrain_models()
+
+optimize_parameters()
+
+Compare past vs new performance
+
+📁 Folder:
+ai_models/retraining.py
+
+backtest/optimize.py
+
+✅ Testing:
+Schedule retrain weekly
+
+Save & log model performance versions
+
+Auto-publish improved model
+
+📦 FINAL STRUCTURE: (Simplified View)
+arduino
+Copy
+Edit
+project_root/
+├── main.py
+├── config.yaml
+├── requirements.txt
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+├── strategies/
+├── backtest/
+├── ai_models/
+├── execution/
+├── live_signals/
+├── logs/
+├── utils/
+└── README.md
+✅ HOW TO BUILD & TEST
+✅ Build & test each phase/module independently
+
+📂 Use main.py or individual test_*.py scripts for unit testing
+
+✅ Once tested, integrate with other modules gradually
+
+💾 All signals/trades must be logged and testable
+
+🧪 Use 2–3 symbols (BTC, EURUSD, SPY) during dev/testing to avoid overload
+

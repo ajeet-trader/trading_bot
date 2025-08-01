@@ -1,0 +1,75 @@
+# System Configuration
+system:
+  #capital_allocation: 0.8
+  max_active_positions: 10
+  #risk_per_trade: 0.01
+  initial_capital: 100000.0 # Starting capital for backtests and live (paper) accounts
+  commission: 1.0           # Default commission per trade
+  slippage: 0.001           # Default slippage percentage
+  risk_per_trade: 0.02      # Default capital percentage to risk per trade (used by Backtester)
+
+# API Keys - Loaded from .env
+api_keys:
+  binance_api_key: $BINANCE_API_KEY # Supports both syntaxes
+  binance_api_secret: ${BINANCE_API_SECRET}
+
+  alpaca_api_key: ${ALPACA_API_KEY}
+  alpaca_api_secret: ${ALPACA_API_SECRET}
+
+# Instruments to Trade
+instruments:
+  - symbol: 'BTC/USDT'
+    category: 'crypto'
+  - symbol: 'AAPL'
+    category: 'stocks'
+
+# Strategy Configuration
+strategies:
+  - name: 'ema_crossover'
+    #active: true
+    enabled: true
+    params:
+      short_window: 20
+      long_window: 50
+
+  - name: "rsi_strategy"
+    enabled: true
+    params:
+      rsi_period: 14
+      oversold_threshold: 30
+      overbought_threshold: 70
+
+  - name: "bollinger_bands"
+    enabled: true
+    params:
+      bb_period: 20
+      bb_std_dev: 2.0
+
+  - name: "mean_reversion"
+    enabled: true
+    params:
+      window: 20
+      z_score_threshold: 2.0
+
+  - name: "ai_strategy"
+    enabled: true
+    params:
+      # This must match the model name saved by the ModelTrainer
+      # Format: {symbol}_{interval}_{model_type}
+      model_name: "AAPL_1d_xgb"
+      confidence_threshold: 0.60 # Only act on signals with >60%         
+
+
+# Logging Configuration
+logging:
+  max_bytes: 20971520      # 20MB in bytes
+  backup_count: 5      # Keep 5 old log files (e.g., signals.log.1, signals.log.2, ...)
+  
+# risk management rules if not already present
+risk_management:
+  max_portfolio_risk_per_trade: 0.01 # Max % of total portfolio value to risk per trade
+  max_position_exposure: 0.05      # Max % of total portfolio value allowed in a single position
+  daily_drawdown_limit: 0.05       # Halt if portfolio drops 5% from daily high
+  overall_drawdown_limit: 0.15     # Halt if portfolio drops 15% from all-time high  
+
+
