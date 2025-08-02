@@ -283,7 +283,12 @@ def render_settings_config():
     st.subheader("Strategy Configurations")
     st.json(config.get('strategies', {}))
     st.subheader("API Key Placeholders (not actual keys)")
-    st.json(config.get('api_keys', {}))
+    api_keys_masked = {
+        key: f"{val[:4]}****{val[-4:]}" if val and len(val) > 8 else "****"
+        for key, val in config.get('api_keys', {}).items()
+    }
+    st.json(api_keys_masked)
+    #st.json(config.get('api_keys', {}))
     
     st.subheader("Risk Management Settings")
     st.json(config.get('risk_management', {}))
